@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  # --- SERVICIO DE BASE DE DATOS ---
+  app-db:
+    image: postgres:15-alpine
+    container_name: app-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: app_main_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/init_db.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - ai_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d app_main_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # --- SERVICIO BACKEND (FastAPI Brain) ---
+  api:
+    build: ./backend
+    container_name: deepcheck-api
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@app-db:5432/app_main_db
+      - JWT_SECRET=${JWT_SECRET}
+      - OLLAMA_BASE_URL=http://ollama:11434
+    depends_on:
+      app-db:
+        condition: service_healthy
+    networks:
+      - ai_net
+
+  # --- SERVICIO IA (Ollama) ---
+  ollama:
+    image: ollama/ollama
+    container_name: ollama-engine
+    restart: always
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - ai_net
+
+  # --- PROXY Y FRONTEND (Nginx) ---
+  proxy:
+    image: nginx:alpine
+    container_name: nginx-proxy
+    ports:
+      - "${PORT}:80"
+    volumes:
+      - ./webui:/usr/share/nginx/html:ro
+    depends_on:
+      - api
+    networks:
+      - ai_net
+
+networks:
+  ai_net:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  ollama_data:
