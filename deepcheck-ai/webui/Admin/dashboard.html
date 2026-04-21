@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepCheck - Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Semantic Aside -->
+        <aside class="sidebar">
+            <div class="logo-icon small">
+                <i class="ph-fill ph-shield-check"></i>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-view="global">
+                    <i class="ph ph-globe"></i> Vista Global
+                </a>
+                <a href="#" class="nav-item" data-view="dashboard">
+                    <i class="ph ph-squares-four"></i> Monitorización
+                </a>
+                <a href="#" class="nav-item" data-view="models">
+                    <i class="ph ph-brain"></i> Modelos IA
+                </a>
+                <a href="#" class="nav-item" data-view="users">
+                    <i class="ph ph-users"></i> Usuarios
+                </a>
+                <a href="#" class="nav-item" data-view="settings">
+                    <i class="ph ph-gear"></i> Configuración
+                </a>
+            </nav>
+            <div style="margin-top: auto;">
+                <a href="../Acceso/index.html" class="nav-item">
+                    <i class="ph ph-sign-out"></i> Salir
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <h2>Panel de Administración</h2>
+                <div class="user-profile-mini">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=4f46e5&color=fff" alt="Admin"
+                        class="avatar-sm" style="width: 32px; height: 32px; border-radius: 50%;">
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+
+                <!-- VIEW: GLOBAL (New) -->
+                <div id="global" class="admin-view active">
+                    <section class="stats-grid">
+                        <article class="stat-card">
+                            <div class="stat-icon purple"><i class="ph-fill ph-users"></i></div>
+                            <div class="stat-info">
+                                <h3>1,234</h3>
+                                <p>Usuarios Totales</p>
+                            </div>
+                        </article>
+                        <article class="stat-card">
+                            <div class="stat-icon info"><i class="ph-fill ph-chats-circle"></i></div>
+                            <div class="stat-info">
+                                <h3>856</h3>
+                                <p>Chats Activos</p>
+                            </div>
+                        </article>
+                        <article class="stat-card">
+                            <div class="stat-icon warning"><i class="ph-fill ph-cpu"></i></div>
+                            <div class="stat-info">
+                                <h3>99.9%</h3>
+                                <p>Uptime</p>
+                            </div>
+                        </article>
+                    </section>
+
+                    <div class="content-grid" style="margin-top: 2rem;">
+                        <article class="card full-width-card">
+                            <div class="card-header">
+                                <h3>Estado del Sistema</h3>
+                            </div>
+                            <div
+                                style="display: flex; gap: 2rem; align-items: center; justify-content: space-around; padding: 2rem;">
+                                <div style="text-align: center;">
+                                    <div style="font-size: 2rem; font-weight: 700; color: var(--success);">OK</div>
+                                    <div style="color: var(--text-secondary);">API Gateway</div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 2rem; font-weight: 700; color: var(--success);">OK</div>
+                                    <div style="color: var(--text-secondary);">Database</div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 2rem; font-weight: 700; color: var(--warning);">WARN</div>
+                                    <div style="color: var(--text-secondary);">Redis Cache</div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- VIEW: DASHBOARD (Monitoring) -->
+                <div id="dashboard" class="admin-view">
+                    <div class="content-grid">
+                        <article class="card">
+                            <div class="card-header">
+                                <h3>Recursos del Servidor</h3>
+                            </div>
+                            <div class="meter-group">
+                                <div class="meter-label"><span>CPU Usage</span><span>45%</span></div>
+                                <meter min="0" max="100" low="30" high="70" optimum="15" value="45"></meter>
+                            </div>
+                            <div class="meter-group">
+                                <div class="meter-label"><span>RAM Usage</span><span>72%</span></div>
+                                <meter min="0" max="100" low="50" high="80" optimum="40" value="72"></meter>
+                            </div>
+                            <div class="meter-group">
+                                <div class="meter-label"><span>Disk Space</span><span>88%</span></div>
+                                <progress value="88" max="100"
+                                    style="width: 100%; height: 8px; border-radius: 4px;"></progress>
+                            </div>
+                            <div style="height: 200px; margin-top: 2rem;">
+                                <canvas id="serverChart"></canvas>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- VIEW: MODELS (New) -->
+                <div id="models" class="admin-view">
+                    <div class="card-header"
+                        style="margin-bottom: 1.5rem; display: flex; justify-content: space-between;">
+                        <h3>Gestión de Modelos IA</h3>
+                        <button class="primary-btn" style="width: auto;"><i class="ph ph-download-simple"></i> Descargar
+                            Nuevo Modelo</button>
+                    </div>
+
+                    <div class="model-card">
+                        <div class="model-info">
+                            <div class="model-icon"><i class="ph-fill ph-brain"></i></div>
+                            <div>
+                                <h4>DeepCheck Pro 1.0</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary);">Modelo principal (70B
+                                    params)</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; align-items: center;">
+                            <span class="tag success"
+                                style="background:#dcfce7; color:#166534; padding:2px 8px; border-radius:10px; font-size:0.75rem;">Activo</span>
+                            <button class="icon-btn"><i class="ph ph-arrows-clockwise"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="model-card">
+                        <div class="model-info">
+                            <div class="model-icon"><i class="ph-fill ph-lightning"></i></div>
+                            <div>
+                                <h4>DeepCheck Fast</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary);">Modelo rápido (7B params)
+                                </p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; align-items: center;">
+                            <span class="tag success"
+                                style="background:#dcfce7; color:#166534; padding:2px 8px; border-radius:10px; font-size:0.75rem;">Listo</span>
+                            <button class="icon-btn"><i class="ph ph-play"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="model-card" style="opacity: 0.7;">
+                        <div class="model-info">
+                            <div class="model-icon" style="background: #f1f5f9; color: var(--text-muted);"><i
+                                    class="ph-fill ph-code"></i></div>
+                            <div>
+                                <h4>DeepCheck Coder (Beta)</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary);">Especializado en código</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; align-items: center;">
+                            <button class="primary-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Descargar
+                                (4GB)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW: USERS -->
+                <div id="users" class="admin-view">
+                    <article class="card full-width-card">
+                        <div class="card-header">
+                            <h3>Gestión de Usuarios</h3>
+                            <button class="primary-btn" style="width: auto; padding: 0.5rem 1rem;"><i
+                                    class="ph ph-plus"></i> Añadir Usuario</button>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Email</th>
+                                    <th>Rol</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Carlos Ruiz</strong></td>
+                                    <td>carlos@example.com</td>
+                                    <td>Admin</td>
+                                    <td><span class="tag success"
+                                            style="background:#dcfce7; color:#166534; padding:2px 8px; border-radius:10px; font-size:0.75rem;">Activo</span>
+                                    </td>
+                                    <td><button class="icon-btn"><i class="ph ph-pencil-simple"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Ana Lopez</strong></td>
+                                    <td>ana@example.com</td>
+                                    <td>User</td>
+                                    <td><span class="tag warning"
+                                            style="background:#fef9c3; color:#854d0e; padding:2px 8px; border-radius:10px; font-size:0.75rem;">Pendiente</span>
+                                    </td>
+                                    <td><button class="icon-btn"><i class="ph ph-pencil-simple"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </article>
+                </div>
+
+                <!-- VIEW: SETTINGS -->
+                <div id="settings" class="admin-view">
+                    <article class="card" style="max-width: 600px;">
+                        <div class="card-header">
+                            <h3>Configuración General</h3>
+                        </div>
+                        <form>
+                            <div class="form-group">
+                                <label>Nombre del Sitio</label>
+                                <input type="text" value="DeepCheck AI">
+                            </div>
+                            <div class="form-group">
+                                <label>Email de Soporte</label>
+                                <input type="email" value="support@deepcheck.ai">
+                            </div>
+                            <div class="form-group">
+                                <label>Modo de Mantenimiento</label>
+                                <select>
+                                    <option>Desactivado</option>
+                                    <option>Activado</option>
+                                </select>
+                            </div>
+                            <button class="primary-btn">Guardar Cambios</button>
+                        </form>
+                    </article>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <script src="../assets/script.js"></script>
+</body>
+
+</html>
