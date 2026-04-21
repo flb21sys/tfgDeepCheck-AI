@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepCheck - Chat AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body>
+    <div class="app-container chat-layout">
+
+        <!-- Main Chat Area -->
+        <main class="chat-main full-width">
+            <header class="chat-header">
+                <div class="header-left">
+                    <div class="logo-icon small">
+                        <i class="ph-fill ph-shield-check"></i>
+                    </div>
+                </div>
+
+                <!-- Center: Model Dropdown -->
+                <div class="header-center">
+                    <div class="custom-dropdown-container">
+                        <button class="dropdown-trigger" onclick="toggleDropdown()">
+                            <span id="selected-model">DeepCheck Pro 1.0</span>
+                            <i class="ph ph-caret-down"></i>
+                        </button>
+                        <div class="dropdown-menu" id="model-dropdown">
+                            <div class="dropdown-item active" onclick="selectModel('DeepCheck Pro 1.0')">
+                                <i class="ph ph-sparkle"></i>
+                                <div class="item-info">
+                                    <span class="item-title">DeepCheck Pro 1.0</span>
+                                    <span class="item-desc">Modelo más capaz</span>
+                                </div>
+                            </div>
+                            <div class="dropdown-item" onclick="selectModel('DeepCheck Fast')">
+                                <i class="ph ph-lightning"></i>
+                                <div class="item-info">
+                                    <span class="item-title">DeepCheck Fast</span>
+                                    <span class="item-desc">Respuestas rápidas</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Help & User -->
+                <div class="header-right">
+                    <button class="icon-btn" onclick="openHelpModal()" title="Recursos y Ayuda"
+                        style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-secondary); transition: var(--transition);">
+                        <i class="ph ph-book-bookmark"></i>
+                    </button>
+                    <div class="user-cloud-icon" onclick="window.location.href='../Acceso/index.html'" title="Salir">
+                        <i class="ph-fill ph-cloud"></i>
+                    </div>
+                </div>
+            </header>
+
+            <div class="chat-container" id="chat-container">
+                <!-- Messages will appear here -->
+            </div>
+
+            <div class="input-area-wrapper centered">
+                <div class="welcome-hero">
+                    <div class="logo-icon large" style="margin: 0 auto 1rem;">
+                        <i class="ph-fill ph-shield-check"></i>
+                    </div>
+                    <h2>¿En qué puedo ayudarte hoy?</h2>
+                </div>
+                <button class="attach-btn">
+                    <i class="ph ph-plus"></i>
+                </button>
+                <div class="input-area">
+                    <textarea id="chat-input" placeholder="Escribe un mensaje..." rows="1" oninput="autoResize(this)"
+                        style="flex: 1; background: transparent; border: none; resize: none; outline: none; font-family: inherit; font-size: 0.95rem; color: var(--text-primary); padding: 0.5rem 0;"></textarea>
+                    <button class="send-btn" id="send-btn" onclick="sendMessage()"
+                        style="background: none; border: none; color: var(--text-muted); font-size: 1.3rem; cursor: pointer; padding: 0; transition: var(--transition);">
+                        <i class="ph-fill ph-paper-plane-right"></i>
+                    </button>
+                </div>
+                <p class="disclaimer"
+                    style="text-align: center; margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted);">DeepCheck
+                    puede cometer errores. Verifica la información importante.</p>
+            </div>
+        </main>
+
+        <!-- Bottom Drawer (History) -->
+        <input type="checkbox" id="drawer-toggle" class="drawer-checkbox">
+        <label for="drawer-toggle" class="drawer-btn">
+            <i class="ph ph-clock-counter-clockwise"></i>
+            <span>Historial</span>
+            <i class="ph ph-caret-up toggle-icon"></i>
+        </label>
+
+        <div class="bottom-drawer">
+            <div class="drawer-content">
+                <div class="drawer-header">
+                    <h3>Tus Conversaciones</h3>
+                    <button class="new-chat-btn-small" onclick="startNewChat()"
+                        style="background: var(--accent-light); color: var(--accent-primary); border: none; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="ph ph-plus"></i> Nuevo Chat
+                    </button>
+                </div>
+                <div class="history-grid">
+                    <div class="history-section">
+                        <span class="section-title">Hoy</span>
+                        <div class="history-card active">
+                            <i class="ph ph-chat-circle"></i>
+                            <div class="history-info">
+                                <span class="history-title">Análisis de vulnerabilidades</span>
+                                <span class="history-time">10:23 AM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Modal -->
+        <dialog id="help-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="ph ph-book-open"></i> Centro de Recursos</h2>
+                    <button class="close-btn" onclick="closeHelpModal()"
+                        style="background: none; border: none; font-size: 1.5rem; cursor: pointer;"><i
+                            class="ph ph-x"></i></button>
+                </div>
+                <div class="modal-body">
+                    <details open>
+                        <summary>Tutorial de Inicio</summary>
+                        <div class="details-content">
+                            <p>Aprende lo básico en este video introductorio.</p>
+                            <video controls width="100%"
+                                poster="https://placehold.co/600x300/e2e8f0/1e293b?text=Tutorial+DeepCheck"
+                                style="border-radius: 8px; margin-top: 0.5rem;">
+                                <source src="movie.mp4" type="video/mp4">
+                                Tu navegador no soporta video.
+                            </video>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </dialog>
+
+    </div>
+    <script src="../assets/script.js"></script>
+</body>
+
+</html>
