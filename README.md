@@ -17,7 +17,7 @@ El proyecto ha sido construido utilizando un stack robusto enfocado en el rendim
 - **Telemetría:** `psutil` para la instrumentación y captura de métricas de hardware (CPU/RAM).
 - **Seguridad:** Autenticación Stateless mediante **JWT (JSON Web Tokens)** y encriptación de credenciales (Bcrypt).
 - **Networking:** Proxy inverso con Nginx para enrutamiento seguro.
-
+  
 ## 🗂️ Estructura del Proyecto
 El repositorio sigue las mejores prácticas de separación de responsabilidades:
 
@@ -36,7 +36,7 @@ El repositorio sigue las mejores prácticas de separación de responsabilidades:
 ├── docker-compose.yml        # Orquestador de la infraestructura
 ├── nginx.conf                # Configuración de enrutamiento del Proxy Inverso
 └── .env.example              # Plantilla de variables de entorno seguras
-``
+```
 
 ## 🚀 Instalación y Ejecución
 Para desplegar este entorno de forma local, asegúrate de tener instalados Docker y Docker Compose.
