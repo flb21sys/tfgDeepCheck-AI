@@ -1,4 +1,5 @@
 # DeepCheck AI: Plataforma Full-Stack de IA Privada y Monitorización Local
+## Infraestructura de Despliegue de Agentes IA con Docker y Microservicios
 
 DeepCheck AI es un ecosistema integral diseñado para la ejecución de modelos de lenguaje (LLM) en infraestructuras privadas. Este proyecto nace como respuesta a la necesidad de implementar soluciones de Inteligencia Artificial que garanticen la soberanía de los datos, eliminando la dependencia de nubes externas y asegurando el cumplimiento normativo (RGPD).
 
