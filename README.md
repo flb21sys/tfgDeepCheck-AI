@@ -36,6 +36,7 @@ El repositorio sigue las mejores prácticas de separación de responsabilidades:
 ├── docker-compose.yml        # Orquestador de la infraestructura
 ├── nginx.conf                # Configuración de enrutamiento del Proxy Inverso
 └── .env.example              # Plantilla de variables de entorno seguras
+``
 
 ## 🚀 Instalación y Ejecución
 Para desplegar este entorno de forma local, asegúrate de tener instalados Docker y Docker Compose.
