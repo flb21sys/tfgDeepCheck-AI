@@ -21,6 +21,7 @@ El proyecto ha sido construido utilizando un stack robusto enfocado en el rendim
 ## 🗂️ Estructura del Proyecto
 El repositorio sigue las mejores prácticas de separación de responsabilidades:
 
+```text
 ├── backend/                  # API Rest (FastAPI) y Modelos de Datos
 │   ├── brain.py              # Controlador principal y Endpoints
 │   ├── tablas.py             # Modelos ORM (SQLAlchemy)
