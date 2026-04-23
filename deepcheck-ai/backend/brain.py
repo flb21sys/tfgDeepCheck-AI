@@ -1,6 +1,7 @@
 import os
 import psutil
 import requests
+from agente import ejecutar_agente_auditor
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -119,3 +120,13 @@ def get_system_stats():
     ram = psutil.virtual_memory().percent
     disk = psutil.disk_usage('/').percent
     return {"cpu": cpu, "ram": ram, "disk": disk}
+
+@app.post("/agente/auditar")
+@app.post("/api/agente/auditar")
+def auditar_con_agente(request: ChatRequest):
+    try:
+        # Llamamos al script del agente en lugar de al chat normal
+        resultado = ejecutar_agente_auditor(request.message)
+        return {"status": "success", "agent_type": "Ciberseguridad", "response": resultado}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error en el Agente: {str(e)}")
